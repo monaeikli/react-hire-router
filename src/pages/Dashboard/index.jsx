@@ -1,23 +1,32 @@
-import { useState } from 'react'
-import PeopleList from './components/PeopleList'
+import PeopleListItem from "./components/PeopleListItem"
+import PropTypes from "prop-types"
 
-function Dashboard(props) {
-  const { hiredPeople } = props
-
-  const [people, setPeople] = useState([])
-
+function Dashboard({ people, hiredPeople }) {
   return (
     <main className="dashboard-layout">
       <section>
         <h2>People</h2>
-        <PeopleList people={people} />
+        <ul>
+          {people.map(person => (
+            <PeopleListItem key={person.login.uuid} person={person} />
+          ))}
+        </ul>
       </section>
       <section>
         <h2>Hired People</h2>
-        <PeopleList people={hiredPeople} />
+        <ul>
+          {hiredPeople.map(person => (
+            <PeopleListItem key={person.login.uuid} person={person} hired/>
+          ))}
+        </ul>
       </section>
     </main>
   )
+}
+
+Dashboard.propTypes = {
+  people: PropTypes.array.isRequired,
+  hiredPeople: PropTypes.array.isRequired,
 }
 
 export default Dashboard
